@@ -55,7 +55,7 @@ def main():
 	tgtPorts = str(options.tgtPort).split(',')
 
 	if (tgtHost == None) | (tgtPorts[0] == None):
-		print "[-] You must specify a target host and port[s]."
+		# print "[-] You must specify a target host and port[s]."
 		print parser.usage
 		exit(0)
 

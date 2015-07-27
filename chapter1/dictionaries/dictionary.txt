@@ -6,3 +6,4 @@ grapes
 secret
 strawberry
 password
+vagrant

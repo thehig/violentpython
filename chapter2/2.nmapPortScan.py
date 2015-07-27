@@ -2,11 +2,17 @@ import nmap
 import optparse
 
 def nmapScan(tgtHost, tgtPort):
-	nmScan = nmap.PortScanner()
-	nmScan.scan(tgtHost, tgtPort)
-	state = nmScan[tgtHost]['tcp'][int(tgtPort)]['state']
-	print " [*] " + tgtHost + " tcp/" + tgtPort + " " + state
+	# print " [*] Scanning host " + str(tgtHost) + ":" + str(tgtPort)
 
+	scanner = nmap.PortScanner()
+	scanner.scan(tgtHost, tgtPort)
+
+	if tgtHost in scanner.all_hosts():
+		state = scanner[str(tgtHost)]['tcp'][int(tgtPort)]['state']
+		print " [*] " + tgtHost + " tcp/" + tgtPort + " " + state
+	else:
+		print " [*] " + tgtHost + " tcp/" + tgtPort + " unreachable"
+	
 
 def main():
 	parser = optparse.OptionParser('%prog -H <target host> -p <target port>')
