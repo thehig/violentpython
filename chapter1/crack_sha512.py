@@ -1,46 +1,68 @@
 # import hashlib
-import crypt
-import glob
+import crypt 																# Crypto library
+import glob																	# Directory scraping
+import datetime 															# Getting the time
 
-def testSHA512Pass(cryptpass):
-	# $6$ms32yIGN$NyXj0YofkK14MpRwFHvXQW0yvUid.slJtgxHE2EuQqgD74S/ GaGGs5VCnqeC.bS0MzTf/EFS3uspQMNeepIAc.
+def testSHA512Pass(cipheredPassword, showDebug = False):
 
-	original = cryptpass
+	cipheredChunks = cipheredPassword.split('$')
 
-	line = cryptpass.split('$')
-
-	hashingAlgo = line[1]
-	salt = line[2]
-	cryptpass = line[3]
+	hashingAlgorithm = cipheredChunks[1]
+	salt = cipheredChunks[2]
+	passwordOnly = cipheredChunks[3]
 	
-	cryptcypher = "$" + str(hashingAlgo) + "$" + str(salt) + "$"
+	hashCipher = "$" + str(hashingAlgorithm) + "$" + str(salt) + "$"
 
-	# print "\tAlgorithm: " + hashingAlgo + "\n\tSalt: " + salt + "\n\tPass: " + cryptpass + "\n\tCipher: " + cryptcypher
-	for filename in glob.glob("dictionaries/*.txt"):
+	if(showDebug):
+		print "[*] Algorithm: 		"	+ hashingAlgorithm
+		print "[*] Salt: 			"	+ salt
+		print "[*] Password: 		"	+ passwordOnly
+		print "[*] Cipher: 			"	+ hashCipher
 
+
+	startTime = datetime.datetime.now()
+	lastScan = datetime.datetime.now()
+	wordsTried = 0															# Number of words tried in total
+	wordsTriedSinceLastReset = 0											# Number of words tried this second
+
+	
+	for filename in glob.glob("dictionaries/*.txt"):						# Dictionaries are expected in a dictionaries subfolder, in plaintext format, with a single word per line
 		dictFile = open(filename, 'r')
-		counter = 0
+		lineCount = 0														# Number of lines in this dictionary
 
 		for word in dictFile.readlines():
-			counter += 1
-			if counter % 500 == 0:
-				print "[*] " + str(counter)
-			word = word.strip('\n')
-			word = word.strip('\r')
+			lineCount += 1
+			wordsTried += 1
+			wordsTriedSinceLastReset += 1
 
-			cryptword = crypt.crypt(word, cryptcypher)
-			# print "[*] Trying '" + word + "':\t" + cryptword
 
-			if(cryptword == original):
-				print "[+] Found Password: "+word+"\n"
+			scanDelta = datetime.datetime.now() - lastScan					# Calculate scans per second
+			if(scanDelta.total_seconds() >= 1):
+				print "[*] Scanned " + str(wordsTriedSinceLastReset) + " per second (" + str(wordsTried) + ")"
+				lastScan = datetime.datetime.now()
+				wordsTriedSinceLastReset = 0
+			
+			word = word.strip('\n').strip('\r')								# Clean up the dictionary word (Remove newline)
+			cipheredWord = crypt.crypt(word, hashCipher)					# Encrypt the word with the cipher			
+
+			if(showDebug):
+				print "[*] Trying '" + word + "':\t" + cipheredWord
+
+			if(cipheredWord == cipheredPassword):
+				print "[+] Found Password: " + word + "\n"
 				return
-		print "[-] Password not found in " + filename + " (" + str(counter) + ")"
+
+		print "[*] Password not found in " + filename + " (" + str(lineCount) + ")"
+
 	print "[-] Password not found in any dictionary provided"
+
+	elapsed = datetime.datetime.now() - startTime
+	print "[*] Ran for " + str(elapsed.total_seconds()) + " seconds"
 	return
 
-def main():
-	passFile = open('shadow.txt')
-	for line in passFile.readlines():
+def main(targetFile = 'shadow.txt'):	
+	print "[*] Opening " + targetFile
+	for line in open(targetFile).readlines():
 		if ":" in line:
 			user = line.split(':')[0]
 			cryptPass = line.split(':')[1].strip(' ')
