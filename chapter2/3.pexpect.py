@@ -47,7 +47,7 @@ def main():
 	host = 'localhost'
 	user = 'root'
 	password = 'vagrant'
-	command = 'cat /etc/shadow'
+	command = 'cat /etc/shadow | grep root'
 	
 	child = connect(user, host, password)									# Attempt to spawn an ssh shell on the remote host
 	if child:
