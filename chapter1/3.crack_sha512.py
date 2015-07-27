@@ -42,14 +42,15 @@ def testSHA512Pass(cipheredPassword, showDebug = False):
 				lastScan = datetime.datetime.now()
 				wordsTriedSinceLastReset = 0
 			
-			word = word.strip('\n').strip('\r')								# Clean up the dictionary word (Remove newline)
+			word = word.strip('\r\n')										# Clean up the dictionary word (Remove newline)
+
 			cipheredWord = crypt.crypt(word, hashCipher)					# Encrypt the word with the cipher			
 
 			if(showDebug):
-				print "[*] Trying '" + word + "':\t" + cipheredWord
+				print "[*] Trying '" + word + "' : '" + cipheredWord +"'"
 
 			if(cipheredWord == cipheredPassword):
-				print "[+] Found Password: " + word + "\n"
+				print "[+] Found Password: " + word
 				return
 
 		print "[*] Password not found in " + filename + " (" + str(lineCount) + ")"

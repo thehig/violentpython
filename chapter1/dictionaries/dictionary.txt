@@ -7,3 +7,4 @@ secret
 strawberry
 password
 vagrant
+toor

@@ -9,7 +9,10 @@
 		{
 			"path": "chapter1",
 			"file_exclude_patterns": ["*.zip"],
-			"file_include_patterns": ["*.py"],
+			"file_include_patterns": [
+				"*.py",
+				"*.txt",
+			],
 		},
 
 		{

@@ -36,25 +36,27 @@ def connect(user, host, password):
 
 	child.sendline(password)												# Send the password
 
-	child.expect([pexpect.TIMEOUT] + PROMPT)								# Expect the command prompt
-	if ret == 0:															# Matched the timeout
-		return
-	else:																	# Matched the prompt
+	ret = child.expect([pexpect.TIMEOUT] + PROMPT)							# Expect the command prompt
+	if ret > 0:																# Matched the prompt (0 would be timeout)
 		print "[*] Got command prompt.."
 		return child														# Return the connected child process
+
+	return
 
 def main():
 	host = 'localhost'
 	user = 'root'
 	password = 'vagrant'
-	command = 'cat /etc/shadow | grep root'
+	command = 'cat /etc/shadow'
 	
-	child = connect(user, host, password)
+	child = connect(user, host, password)									# Attempt to spawn an ssh shell on the remote host
 	if child:
-		result = send_command(child, command)
+		result = send_command(child, command)								# Run the provided command
 		print "[+] Command: " + command
-		for line in result.split('\r\n'):
+		for line in result.split('\r\n'):									# Print the results
 			print "[+]\t" + line
+	else:
+		print "[-] Could not get past password prompt."						# Shell did not spawn or log in properly
 
 if __name__ == "__main__":
 	main()
