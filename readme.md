@@ -18,6 +18,7 @@
 | 3.sshCommand.py 		| Uses pexpect to remote ssh into localhost as root with password vagrant. If successful, returns the output of 'cat /etc/shadow | grep root'
 | 4.sshBrute.py 		| Brute forces SSH attacks against a host (-H) as user (-u) with password dictionary (-F)
 | 5.bruteKey.py 		| Brute forces SSH attacks against a host (-H) as user (-u) with pregenerated keys (-d)
+| 6.sshBotnet.py 		| SSH Connects to a list of hard-coded clients and executes commands across all shells
 
 ## Misc
 
