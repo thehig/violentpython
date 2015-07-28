@@ -18,11 +18,11 @@
 
 		{
 			"path": "chapter2",
-			// "folder_exclude_patterns": ["*"],
+			"folder_exclude_patterns": ["*"],
 			// "file_exclude_patterns": ["*.zip"],
 			"file_include_patterns": [
 				"*.py",
-				// "*.txt",
+				"*.txt",
 			],
 		},
 		
