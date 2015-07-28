@@ -17,6 +17,7 @@
 | 2.nmapPortScan.py 	| Same as above, but uses nmap
 | 3.sshCommand.py 		| Uses pexpect to remote ssh into localhost as root with password vagrant. If successful, returns the output of 'cat /etc/shadow | grep root'
 | 4.sshBrute.py 		| Brute forces SSH attacks against a host (-H) as user (-u) with password dictionary (-F)
+| 5.bruteKey.py 		| Brute forces SSH attacks against a host (-H) as user (-u) with pregenerated keys (-d)
 
 ## Misc
 

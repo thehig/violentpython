@@ -24,11 +24,11 @@ def connect(host, user, password, release):
 		Found = True
 		return s
 	except Exception, e:
-		if 'read_nonblocking' in str(e):
+		if 'read_nonblocking' in str(e):														# ssh server connections maxed out
 			Fails += 1
 			time.sleep(5)
 			connect(host, user, password, False)
-		elif 'synchronize with original prompt' in str(e):
+		elif 'synchronize with original prompt' in str(e):										# pxssh needs a second
 			time.sleep(1)
 			connect(host, user, password, False)
 	finally:
@@ -38,9 +38,9 @@ def main():
 
 	parser = optparse.OptionParser('%prog -H <target host> -u <user> -F <password list>')
 
-	parser.add_option('-H', dest='tgtHost', type='string', help='specify target host')
-	parser.add_option('-F', dest='passwdFile', type='string', help='specify password file')
-	parser.add_option('-u', dest='user', type='string', help='specify the user')
+	parser.add_option('-H', dest='tgtHost', 	type='string', help='specify target host')
+	parser.add_option('-F', dest='passwdFile', 	type='string', help='specify password file')
+	parser.add_option('-u', dest='user', 		type='string', help='specify the user')
 
 	(options, args) = parser.parse_args()
 
