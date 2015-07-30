@@ -24,3 +24,6 @@ def main():
 	ftp = ftplib.FTP(host)
 	ftp.login(userName, passWord)
 	returnDefault(ftp)
+
+if __name__ == "__main__":
+	main()
