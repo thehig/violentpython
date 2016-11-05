@@ -5,7 +5,7 @@
 | Filename      		| Explanation 
 | ------------- 		| -------------
 | 1.bannerChecker.py 	| Scans 192.168.95.[147-150] ports [21,22,25,80,110,443] looking for vulnerable banners (provided file parameter)
-| 2.crack.py 	      	| Brute force cracking of /etc/passwd (passwords.txt) using dictionary (dictionaries/dictionary.txt)
+| 2.crack.py 	      	| Brute force cracking of /etcpython/passwd (passwords.txt) using dictionary (dictionaries/dictionary.txt)
 | 3.crack_sha512.py 	| Dictionary cracking of /etc/shadow (shadow.txt) using all dictionaries (dictionaries/*.txt)
 | 4.zipCrack.py 		| Brute forces the provided zip file (evil.zip) with a dictionary file (dictionaries/dictionary.txt)
 
@@ -19,6 +19,11 @@
 | 4.sshBrute.py 		| Brute forces SSH attacks against a host (-H) as user (-u) with password dictionary (-F)
 | 5.bruteKey.py 		| Brute forces SSH attacks against a host (-H) as user (-u) with pregenerated keys (-d)
 | 6.sshBotnet.py 		| SSH Connects to a list of hard-coded clients and executes commands across all shells
+| 7.anonFtpScan.py 		| Attempt to connect to an ftp server using anonymous credentials
+| 8.bruteFtpScan.py 	| Attempt to connect to an ftp server using user/credential dictionary pairs
+| 9.fileFileScanner.py 	| Scan an ftp server for php, htm or asp files
+| 10.ftpInject.py 		| Use anon and brute attempts to access an ftp server then inject redirects into scanned file types
+| 11.conficker.py 		| Set up reverse shell listener (-p, -l), perform smb brute force (-F) and attempt to deploy `ms08_067_netapi` to a subNet (-H)
 
 ## Misc
 
